@@ -1,0 +1,4 @@
+# User
+Rest_User : 
+  type : rest
+  resource: "@UserBundle/Resources/config/routing_rest.yml"
