@@ -1,0 +1,12 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}List of all the users{% endblock %}
+
+{% block body %}
+    <h1>List of all the users</h1>
+    {% for user in users %}
+        <h4>{{user.username}} [created at {{user.created_at|date('d/m/Y')}}]</h4>
+        <a href="{{path('user_get', {'username': user.username})}}">Show the user ></a>
+        <hr>
+    {% endfor %}
+{% endblock %}

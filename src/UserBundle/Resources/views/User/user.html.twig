@@ -1,0 +1,12 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Show the user{% endblock %}
+
+{% block body %}
+    <h1>{{user.username}}</h1>
+    <p>created at {{user.created_at|date('d/m/Y')}}</p>
+    <p>Firstname: {{user.firstname}}</p>
+    <p>Name:  {{user.name}}</p>
+    <hr>
+    <a href="{{path('user_list')}}">Retour à la liste</a>
+{% endblock %}

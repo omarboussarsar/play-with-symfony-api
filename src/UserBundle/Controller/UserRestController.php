@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,11 +10,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * @author omar
  */
 class UserRestController extends Controller {
-    public function getUserAction($username){
-        $user = $this->getDoctrine()->getRepository('UserBundle:User')->findOneByUsername($username);
-        if(!is_object($user)){
+
+    //Get all the users
+    //"api_get_users"            [GET] /api/users
+    public function getUsersAction() {
+        $users = $this->getDoctrine()->getRepository('UserBundle:User')->findAll();
+        if (!is_array($users) || !count($users)) {
+            throw $this->createNotFoundException();
+        }
+        return $users;
+    }
+
+    //Get a specific user by id
+    //"api_get_user"             [GET] /users/{id}
+    public function getUserAction($id) {
+        $user = $this->getDoctrine()->getRepository('UserBundle:User')->findOneById($id);
+        if (!is_object($user)) {
             throw $this->createNotFoundException();
         }
         return $user;
     }
+
 }

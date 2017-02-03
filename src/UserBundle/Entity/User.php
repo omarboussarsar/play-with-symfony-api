@@ -48,6 +48,14 @@ class User extends BaseUser
      */
     protected $name;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     * 
+     * @Expose
+     */
+    protected $createdAt;
 
     /**
      * Get id
@@ -105,6 +113,29 @@ class User extends BaseUser
     public function getName()
     {
         return $this->name;
+    }
+    
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Article
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
     
     /**

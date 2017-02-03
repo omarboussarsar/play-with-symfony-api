@@ -1,6 +1,10 @@
-user_homepage:
-    path:     /hello-world
-    defaults: { _controller: UserBundle:Default:index }
+user_list:
+    path:     /
+    defaults: { _controller: UserBundle:User:list }
+
+user_get:
+    path:     user/{username}
+    defaults: { _controller: UserBundle:User:get }
     
 # Implement all the routes of FOSUserBundle directly
 fos_user:
