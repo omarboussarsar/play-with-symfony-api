@@ -13,3 +13,4 @@ I have implemented those bundles:
 - FOSRestBundle
 - JMSSerializerBundle
 - FOSUserBundle
+- FOSElasticaBundle
