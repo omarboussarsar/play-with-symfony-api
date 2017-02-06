@@ -1,0 +1,24 @@
+fos_elastica:
+    clients:
+        default: { host: %elastic_host%, port: %elastic_port% }
+    indexes:
+        users:
+            client: default
+            types:
+                user:
+                    mappings:
+                        id:
+                            type: integer
+                        createdAt :
+                            type : date
+                        enabled : 
+                            type : boolean
+                        username : ~
+                        firstname : ~
+                        name : ~
+                    persistence:
+                        driver: orm
+                        model: UserBundle\Entity\User
+                        finder: ~
+                        provider: ~
+                        listener: ~

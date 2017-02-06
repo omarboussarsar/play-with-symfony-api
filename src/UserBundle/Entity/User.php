@@ -8,6 +8,7 @@ use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\VirtualProperty;
 use FOS\UserBundle\Model\User as BaseUser;
+use FOS\ElasticaBundle\Annotation\Search;
 
 /**
  * User
@@ -16,6 +17,8 @@ use FOS\UserBundle\Model\User as BaseUser;
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
  * 
  * @ExclusionPolicy("all") 
+ * 
+ * @Search(repositoryClass="UserBundle\SearchRepository\UserRepository")
  */
 class User extends BaseUser
 {

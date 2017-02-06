@@ -5,6 +5,10 @@ user_list:
 user_get:
     path:     user/{username}
     defaults: { _controller: UserBundle:User:get }
+
+user_search:
+    path:     /search
+    defaults: { _controller: UserBundle:User:search }
     
 # Implement all the routes of FOSUserBundle directly
 fos_user:
