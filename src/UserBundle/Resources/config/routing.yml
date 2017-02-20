@@ -3,8 +3,16 @@ user_list:
     defaults: { _controller: UserBundle:User:list }
 
 user_get:
-    path:     user/{username}
+    path:     /user/{username}
     defaults: { _controller: UserBundle:User:get }
+    
+user_add:
+    path:     /add
+    defaults: { _controller: UserBundle:User:add }
+
+user_delete:
+    path:     /delete/{username}
+    defaults: { _controller: UserBundle:User:delete }
 
 user_search:
     path:     /search

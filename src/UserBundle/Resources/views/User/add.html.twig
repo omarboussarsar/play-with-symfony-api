@@ -1,0 +1,14 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Add a user{% endblock %}
+
+{% block body %}
+    <h1>Add a user</h1>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        
+        <a href="{{path('user_list')}}" class="pull-left">Back to the list</a>
+        <input type="submit" value="Add" class="pull-right" />
+    {{ form_end(form) }}
+
+{% endblock %}

@@ -28,6 +28,24 @@ class UserRestControllerTest extends WebTestCase {
 
         $this->assertJsonResponse($response, 200);
     }
+    
+    public function testPostUser() {
+        $client = static::createClient();
+
+        $crawler = $client->request('POST', '/api/users');
+        $response = $client->getResponse();
+
+//        $this->assertJsonResponse($response, 200);
+    }
+
+    public function testDeleteUser() {
+        $client = static::createClient();
+
+//        $crawler = $client->request('DELETE', '/api/users/4');
+//        $response = $client->getResponse();
+//
+//        $this->assertJsonResponse($response, 200);
+    }
 
     protected function assertJsonResponse($response, $statusCode = 200) {
         $this->assertEquals(

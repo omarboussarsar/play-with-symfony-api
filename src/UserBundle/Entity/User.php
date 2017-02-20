@@ -9,12 +9,17 @@ use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\VirtualProperty;
 use FOS\UserBundle\Model\User as BaseUser;
 use FOS\ElasticaBundle\Annotation\Search;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * User
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
+ * @UniqueEntity(
+ *      fields={"username", "email"},
+ *      errorPath="username",
+ *      message="This username or/and email is/are already in use.")
  * 
  * @ExclusionPolicy("all") 
  * 
@@ -59,8 +64,13 @@ class User extends BaseUser
      * @Expose
      */
     protected $createdAt;
+    
+    function __construct() {
+        parent::__construct();
+        $this->createdAt = new \DateTime();
+    }
 
-    /**
+        /**
      * Get id
      *
      * @return int

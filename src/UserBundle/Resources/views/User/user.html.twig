@@ -9,4 +9,5 @@
     <p>Name:  {{user.name}}</p>
     <hr>
     <a href="{{path('user_list')}}">Back to the list</a>
+    <a href="{{path('user_delete', {'username': user.username})}}">Delete the user</a>
 {% endblock %}
