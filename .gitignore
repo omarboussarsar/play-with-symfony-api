@@ -17,3 +17,4 @@
 /phpunit.xml.dist
 /nbproject
 /web/config.php
+/app/config/parameters.yml
