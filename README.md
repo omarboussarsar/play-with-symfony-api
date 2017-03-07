@@ -18,10 +18,10 @@ I have implemented those bundles:
 - doctrine/data-fixtures: "^1.2"
 
 
-* You should add 2 virtual hosts in your web server (apache for example):<br>
+You should add 2 virtual hosts in your web server (apache for example):<br>
 www.playwithsymfony.com<br>
 www2.playwithsymfony.com
 
-* Finally you should add to add hosts to /etc/hosts:<br>
+Finally you should add to add hosts to /etc/hosts:<br>
 127.0.0.1 www.playwithsymfony.com<br>
 127.0.0.1 www2.playwithsymfony.com
