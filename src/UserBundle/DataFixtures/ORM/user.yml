@@ -1,9 +1,13 @@
 UserBundle\Entity\User:
-    user{1..10}:
+    user1:
+        username: 'omarboussarsar'
+        email: 'boussarsar.omar@gmail.com'
+        firstname: 'Omar'
+        name: 'Boussarsar'
+        plainPassword: '123456'
+    user{2..10}:
         username: '<username()>'
         email: '<email()>'
         firstname: '<firstName()>'
         name: '<lastName()>'
         plainPassword: '123456'
-        #birthDate: '<date()>'
-        #favoriteNumber: '50%? <numberBetween(1, 200)>'

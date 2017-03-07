@@ -2,7 +2,7 @@
 
 namespace UserBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use UserBundle\Test\WebTestCase;
 
 /**
  * Description of UserRestControllerTest
@@ -32,19 +32,29 @@ class UserRestControllerTest extends WebTestCase {
     public function testPostUser() {
         $client = static::createClient();
 
-        $crawler = $client->request('POST', '/api/users');
+        $crawler = $client->request('POST', '/api/users', array(
+            'user' => array(
+                'username' => 'testusername',
+                'email' => 'testemail@example.com',
+                'firstName' => 'testfirstname',
+                'name' => 'testname',
+                'plainPassword' => array(
+                    'first' => '123456',
+                    'second' => '123456'
+                ),
+        )));
         $response = $client->getResponse();
 
-//        $this->assertJsonResponse($response, 200);
+        $this->assertJsonResponse($response, 200);
     }
 
     public function testDeleteUser() {
         $client = static::createClient();
 
-//        $crawler = $client->request('DELETE', '/api/users/4');
-//        $response = $client->getResponse();
-//
-//        $this->assertJsonResponse($response, 200);
+        $crawler = $client->request('DELETE', '/api/users/1');
+        $response = $client->getResponse();
+
+        $this->assertJsonResponse($response, 200);
     }
 
     protected function assertJsonResponse($response, $statusCode = 200) {

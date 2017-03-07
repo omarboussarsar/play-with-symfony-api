@@ -9,8 +9,10 @@
     {% endif %}
     <a href="{{path('user_add')}}" class="pull-right">Add a user</a>
     {% for user in users %}
-        <h4>{{user.username}} [created at {{user.created_at|date('d/m/Y')}}]</h4>
-        <a href="{{path('user_get', {'username': user.username})}}">Show the user ></a>
-        <hr>
+        <div class="user-informations">
+            <h4>{{user.username}} [created at {{user.created_at|date('d/m/Y')}}]</h4>
+            <a href="{{path('user_get', {'username': user.username})}}">Show the user ></a>
+            <hr>
+        </div>
     {% endfor %}
 {% endblock %}
