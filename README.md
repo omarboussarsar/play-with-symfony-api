@@ -18,28 +18,10 @@ I have implemented those bundles:
 - doctrine/data-fixtures: "^1.2"
 
 
-* Code to add virtual hosts (with apache) :
-<VirtualHost *:80>
-    ServerName www.playwithsymfony.com
-    DocumentRoot "/var/www/html/play-with-symfony/web/app.php"
+* You should add 2 virtual hosts in your web server (apache for example):<br>
+www.playwithsymfony.com<br>
+www2.playwithsymfony.com
 
-    ErrorLog ${APACHE_LOG_DIR}/error_www_playwithsymfony.log
-    CustomLog ${APACHE_LOG_DIR}/access_www_playwithsymfony.log combined
-
-    # Other directives here
-</VirtualHost>
-
-<VirtualHost *:80>
-    ServerName www2.playwithsymfony.com
-    DocumentRoot "/var/www/html/play-with-symfony/web/app_dev.php"
-
-    ErrorLog ${APACHE_LOG_DIR}/error_www2_playwithsymfony.log
-    CustomLog ${APACHE_LOG_DIR}/access_www2_playwithsymfony.log combined
-
-    # Other directives here
-</VirtualHost>
-
-
-* Code to add to add hosts to /etc/hosts:
-127.0.0.1 www.playwithsymfony.com
+* Finally you should add to add hosts to /etc/hosts:<br>
+127.0.0.1 www.playwithsymfony.com<br>
 127.0.0.1 www2.playwithsymfony.com
