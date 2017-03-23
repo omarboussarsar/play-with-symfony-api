@@ -5,3 +5,8 @@ services:
 
     user.web_service_tools:
         class: UserBundle\Utils\WebServiceTools
+        tags:
+            - { name: user.service, alias: web_service_tools }
+            
+    user.service_chain:
+        class: UserBundle\Utils\ServiceChain
