@@ -1,0 +1,13 @@
+# Configuration file for Coke, "Enjoy sniffing your code" : https://github.com/M6Web/Coke
+
+# Command used to launch PHP CodeSniffer (optional - default: phpcs)
+command=phpcs
+
+# Standard used by PHP CodeSniffer (required)
+standard=PSR1,PSR2
+
+# Verbose mode (optional - default: false)
+verbose=true
+
+# White list of files and directories (optional)
+src/
