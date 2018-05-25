@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use UserBundle\Entity\User;
 use UserBundle\Form\Type\UserType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 /**
  * Description of UserController
@@ -16,6 +17,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 class UserController extends Controller
 {
     /**
+     * @Rest\Get("users")
      * @ApiDoc(
      *  section="Users",
      *  statusCodes={
@@ -34,6 +36,7 @@ class UserController extends Controller
     }
 
     /**
+     * @Rest\Get("users/{id}")
      * @ApiDoc(
      * section="Users",
      *  statusCodes={
@@ -53,6 +56,7 @@ class UserController extends Controller
     }
 
     /**
+     * @Rest\Post("users")
      * @ApiDoc(
      *  section="Users",
      *  statusCodes={
@@ -83,6 +87,7 @@ class UserController extends Controller
     }
 
     /**
+     * @Rest\Delete("users/{id}")
      * @ApiDoc(
      *  section="Users",
      *  statusCodes={
