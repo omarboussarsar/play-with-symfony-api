@@ -11,37 +11,59 @@ use UserBundle\Test\WebTestCase;
  */
 class UserControllerTest extends WebTestCase {
 
-    public function testList() {
+    public function testGetUsers() {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/');
-        $this->assertContains('List of all the users', $client->getResponse()->getContent());
-        //$this->assertEquals(10, $crawler->filter('div.user-informations')->count());
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $crawler = $client->request('GET', '/api/users');
+        $response = $client->getResponse();
+
+        $this->assertJsonResponse($response, 200);
     }
 
-//    public function testGet() {
-//        $client = static::createClient();
-//
-//        $crawler = $client->request('GET', '/user/omarboussarsar');
-//        $this->assertContains('Delete', $client->getResponse()->getContent());
-//        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-//    }
-//
-//    public function testAdd() {
-//        $client = static::createClient();
-//
-//        $crawler = $client->request('GET', '/add');
-//        $this->assertContains('Back to the list', $client->getResponse()->getContent());
-//
-////        $crawler = $client->request('POST', '/add');
-//    }
-//
-//    public function testDelete() {
-//        $client = static::createClient();
-//
-//        $crawler = $client->request('GET', '/supprimer/omarboussarsar');
-//        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-//    }
+    public function testGetUser() {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/api/users/1');
+        $response = $client->getResponse();
+
+        $this->assertJsonResponse($response, 200);
+    }
+    
+    public function testPostUser() {
+        $client = static::createClient();
+
+        $crawler = $client->request('POST', '/api/users', array(
+            'user' => array(
+                'username' => 'testusername',
+                'email' => 'testemail@example.com',
+                'firstName' => 'testfirstname',
+                'name' => 'testname',
+                'plainPassword' => array(
+                    'first' => '123456',
+                    'second' => '123456'
+                ),
+        )));
+        $response = $client->getResponse();
+
+        $this->assertJsonResponse($response, 200);
+    }
+
+    public function testDeleteUser() {
+        $client = static::createClient();
+
+        $crawler = $client->request('DELETE', '/api/users/1');
+        $response = $client->getResponse();
+
+        $this->assertJsonResponse($response, 200);
+    }
+
+    protected function assertJsonResponse($response, $statusCode = 200) {
+        $this->assertEquals(
+                $statusCode, $response->getStatusCode(), $response->getContent()
+        );
+        $this->assertTrue(
+                $response->headers->contains('Content-Type', 'application/json'), $response->headers
+        );
+    }
 
 }

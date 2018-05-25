@@ -1,40 +1,5 @@
-user_list:
-    path:     /
-    defaults: { _controller: UserBundle:User:list }
-
-user_get:
-    path:     /user/{username}
-    defaults: { _controller: UserBundle:User:get }
-    
-user_add:
-    path:     /add
-    defaults: { _controller: UserBundle:User:add }
-
-user_delete:
-    path:     /delete/{username}
-    defaults: { _controller: UserBundle:User:delete }
-
-user_search:
-    path:     /search
-    defaults: { _controller: UserBundle:User:search }
-    
-# Implement all the routes of FOSUserBundle directly
-fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
-    
-# Other method: If you want to implement each part of FOSUserBundle separately   
-#fos_user_profile:
-#    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-#    prefix: /profile
-#
-#fos_user_register:
-#    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
-#    prefix: /register
-#
-#fos_user_resetting:
-#    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
-#    prefix: /resetting
-#
-#fos_user_change_password:
-#    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
-#    prefix: /profile
+# Users
+user: 
+    type: rest
+    resource:     "UserBundle:User"
+    name_prefix:  api_
