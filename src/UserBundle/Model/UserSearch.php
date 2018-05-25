@@ -7,7 +7,8 @@ namespace UserBundle\Model;
  *
  * @author omar
  */
-class UserSearch {
+class UserSearch
+{
 
     // begin of creation range
     protected $createdFrom;
@@ -17,7 +18,8 @@ class UserSearch {
     protected $isEnabled;
     protected $username;
 
-    public function __construct() {
+    public function __construct()
+    {
         // initialise the createdFrom to "one month ago", and the createdTo to "today"
         $date = new \DateTime();
         $month = new \DateInterval('P1Y');
@@ -29,7 +31,8 @@ class UserSearch {
         $this->createdTo->setTime('23', '59', '59');
     }
 
-    public function setCreatedFrom($createdFrom) {
+    public function setCreatedFrom($createdFrom)
+    {
         if ($createdFrom != "") {
             $createdFrom->setTime('00', '00', '00');
             $this->createdFrom = $createdFrom;
@@ -38,11 +41,13 @@ class UserSearch {
         return $this;
     }
 
-    public function getCreatedFrom() {
+    public function getCreatedFrom()
+    {
         return $this->createdFrom;
     }
 
-    public function setCreatedTo($createdTo) {
+    public function setCreatedTo($createdTo)
+    {
         if ($createdTo != "") {
             $createdTo->setTime('23', '59', '59');
             $this->createdTo = $createdTo;
@@ -51,41 +56,48 @@ class UserSearch {
         return $this;
     }
 
-    public function getCreatedTo() {
+    public function getCreatedTo()
+    {
         return $this->createdTo;
     }
 
-    public function clearDates() {
+    public function clearDates()
+    {
         $this->createdTo = null;
         $this->createdFrom = null;
     }
 
-    public function getIsEnabled() {
+    public function getIsEnabled()
+    {
         return $this->isEnabled;
     }
 
-    public function setIsEnabled($isEnabled) {
+    public function setIsEnabled($isEnabled)
+    {
         $this->isEnabled = $isEnabled;
 
         return $this;
     }
 
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
     }
 
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
 
         return $this;
     }
 
-    function getUsername() {
+    public function getUsername()
+    {
         return $this->username;
     }
 
-    function setUsername($username) {
+    public function setUsername($username)
+    {
         $this->username = $username;
     }
-
 }

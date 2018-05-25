@@ -10,9 +10,10 @@ use UserBundle\Model\UserSearch;
  *
  * @author omar
  */
-class UserRepository extends Repository {
-
-    public function search(UserSearch $userSearch) {
+class UserRepository extends Repository
+{
+    public function search(UserSearch $userSearch)
+    {
         // we create a query to return all the users
         // but if the criteria username is specified, we use it
         if ($userSearch->getUsername() != null && $userSearch != '') {
@@ -20,7 +21,7 @@ class UserRepository extends Repository {
             $query->setFieldQuery('user.username', $userSearch->getUsername());
             $query->setFieldFuzziness('user.username', 0.7);
             $query->setFieldMinimumShouldMatch('user.username', '80%');
-            //
+        //
         } else {
             $query = new \Elastica\Query\MatchAll();
         }
@@ -31,17 +32,21 @@ class UserRepository extends Repository {
 
         // Dates filter
         if (null !== $userSearch->getCreatedFrom() && null !== $userSearch->getCreatedTo()) {
-            $boolFilter->addMust(new \Elastica\Filter\Range('createdAt', array(
-                'gte' => \Elastica\Util::convertDate($userSearch->getCreatedFrom()->getTimestamp()),
-                'lte' => \Elastica\Util::convertDate($userSearch->getCreatedTo()->getTimestamp())
+            $boolFilter->addMust(
+                new \Elastica\Filter\Range(
+                    'createdAt',
+                    array(
+                    'gte' => \Elastica\Util::convertDate($userSearch->getCreatedFrom()->getTimestamp()),
+                    'lte' => \Elastica\Util::convertDate($userSearch->getCreatedTo()->getTimestamp())
                     )
-            ));
+                )
+            );
         }
 
         // Enabled or not filter
         if ($userSearch->getIsEnabled() !== null) {
             $boolFilter->addMust(
-                    new \Elastica\Filter\Terms('enabled', array($userSearch->getIsEnabled()))
+                new \Elastica\Filter\Terms('enabled', array($userSearch->getIsEnabled()))
             );
         }
 
@@ -51,5 +56,4 @@ class UserRepository extends Repository {
 
         return $this->find($query);
     }
-
 }

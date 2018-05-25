@@ -1,9 +1,9 @@
-user:
-    resource: "@UserBundle/Resources/config/routing.yml"
-    prefix:   /
-    
 # Rest 
-rest : 
-  type : rest 
-  resource : "routing_rest.yml"
-  prefix : /api
+api_user: 
+    type : rest 
+    resource : "@UserBundle/Resources/config/routing.yml"
+    prefix : /api
+    
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc

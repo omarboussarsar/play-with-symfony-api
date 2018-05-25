@@ -3,7 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
 #    - { resource: "@UserBundle/Resources/config/services.yml" }
-    - { resource: fos_elastica.yml }
+#    - { resource: fos_elastica.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -25,7 +25,6 @@ framework:
         engines: ['twig']
     default_locale:  "%locale%"
     trusted_hosts:   ~
-    trusted_proxies: ~
     session:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id:  session.handler.native_file
@@ -107,3 +106,6 @@ jms_serializer:
             FOSUB:
                 namespace_prefix: "FOS\\UserBundle"
                 path: "%kernel.root_dir%/serializer/FOSUserBundle"
+                
+# Nelmio api doc
+nelmio_api_doc: ~

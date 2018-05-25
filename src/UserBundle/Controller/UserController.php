@@ -3,95 +3,110 @@
 namespace UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Request;
-use UserBundle\Model\UserSearch;
-use UserBundle\Form\Type\UserSearchType;
 use UserBundle\Entity\User;
 use UserBundle\Form\Type\UserType;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 /**
  * Description of UserController
  *
  * @author omar
  */
-class UserController extends Controller {
-
-    //Show all the users
-    public function listAction() {
-        $url = $this->generateUrl('api_get_users', array(), UrlGeneratorInterface::ABSOLUTE_URL);
-        $data = $this->container->get('user.web_service_tools')->getData('GET', $url);
-        return $this->render('UserBundle:User:list.html.twig', array(
-                    'users' => $data
-        ));
+class UserController extends Controller
+{
+    /**
+     * @Rest\Get("users")
+     * @ApiDoc(
+     *  section="Users",
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      403="Returned when the user is not authorized",
+     *  },
+     *  resource=true,
+     *  description="get all the users",
+     * )
+     * @return User[]
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function getUsersAction()
+    {
+        return $this->getDoctrine()->getRepository('UserBundle:User')->findAll();
     }
 
-    //Show a specific user
-    public function getAction($username) {
-        $user = $this->getDoctrine()->getRepository('UserBundle:User')->findOneByUsername($username);
+    /**
+     * @Rest\Get("users/{id}")
+     * @ApiDoc(
+     * section="Users",
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      403="Returned when the user is not authorized",
+     *      404="Returned when the user is not found"
+     *  },
+     *  resource=true,
+     *  description="get a specific user",
+     * )
+     * @return User
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function getUserAction(User $user)
+    {
+        return $user;
+    }
+
+    /**
+     * @Rest\Post("users")
+     * @ApiDoc(
+     *  section="Users",
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      400="Returned when validation failed",
+     *      403="Returned when the user is not authorized"
+     *  },
+     *  resource=true,
+     *  description="add a user",
+     *  input="UserBundle\Form\Type\UserType",
+     * )
+     * @return User
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function postUsersAction(Request $request)
+    {
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
         if (!is_object($user)) {
             throw $this->createNotFoundException();
         }
-        $url = $this->generateUrl('api_get_user', array('id' => $user->getId()), UrlGeneratorInterface::ABSOLUTE_URL);
-        $data = $this->container->get('user.web_service_tools')->getData('GET', $url);
-        return $this->render('UserBundle:User:user.html.twig', array(
-                    'user' => $data
-        ));
-    }
-    
-    //Add a user
-    public function addAction(Request $request) {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $parameters = $request->request->all();
-            $url = $this->generateUrl('api_post_users', array(), UrlGeneratorInterface::ABSOLUTE_URL);
-            $data = $this->container->get('user.web_service_tools')->getData('POST', $url, $parameters);
-            if (isset($data->username)) {
-                return $this->redirect($this->generateUrl(
-                    'user_get', array('username' => $data->username)
-                ));
-            }
-        }
-        return $this->render('UserBundle:User:add.html.twig', array(
-            'form' => $form->createView()
-        ));
-    }
-    
-    //Delete a specific user
-    public function deleteAction($username) {
-        $user = $this->getDoctrine()->getRepository('UserBundle:User')->findOneByUsername($username);
-        if(!is_object($user)){
-            throw $this->createNotFoundException();
-        }
-        $url = $this->generateUrl('api_delete_user', array('id' => $user->getId()), UrlGeneratorInterface::ABSOLUTE_URL);
-        $data = $this->container->get('user.web_service_tools')->getData('DELETE', $url);
-        return $this->redirect($this->generateUrl(
-            'user_list', array(
-                'is_deleted' => $data,
-                'username' => $username
-            )
-        ));
+        
+        return $user;
     }
 
-    //Search users with elastica
-    public function searchAction(Request $request) {
-        $userSearch = new UserSearch();
-
-        $form = $this->createForm(UserSearchType::class, $userSearch);
-
-        $form->handleRequest($request);
-        $userSearch = $form->getData();
-
-        $elasticaManager = $this->container->get('fos_elastica.manager');
-        $users = $elasticaManager->getRepository('UserBundle:User')->search($userSearch);
-
-        return $this->render('UserBundle:User:search.html.twig', array(
-                    'users' => $users,
-                    'form' => $form->createView(),
-        ));
+    /**
+     * @Rest\Delete("users/{id}")
+     * @ApiDoc(
+     *  section="Users",
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      403="Returned when the user is not authorized",
+     *      404="Returned when the user is not found"
+     *  },
+     *  resource=true,
+     *  description="delete a specific user",
+     * )
+     * @return bool
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function deleteUserAction(User $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
+        
+        return true;
     }
-
 }

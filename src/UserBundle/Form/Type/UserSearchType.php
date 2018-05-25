@@ -14,42 +14,61 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
  *
  * @author omar
  */
-class UserSearchType extends AbstractType {
-
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+class UserSearchType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
         $builder
-                ->add('username', TextType::class, array(
+            ->add(
+                'username',
+                TextType::class,
+                array(
                     'required' => false,
-                ))
-                ->add('createdFrom', DateType::class, array(
+                )
+            )
+            ->add(
+                'createdFrom',
+                DateType::class,
+                array(
                     'required' => false,
                     'widget' => 'single_text',
-                ))
-                ->add('createdTo', DateType::class, array(
+                )
+            )
+            ->add(
+                'createdTo',
+                DateType::class,
+                array(
                     'required' => false,
                     'widget' => 'single_text',
-                ))
-                ->add('isEnabled', ChoiceType::class, array(
+                )
+            )
+            ->add(
+                'isEnabled',
+                ChoiceType::class,
+                array(
                     'choices' => array(
                         'non' => 'false',
                         'oui' => 'true'
                     ),
                     'required' => false,
-                ))
-        ;
+                )
+            );
     }
 
-    public function configureOptions(OptionsResolver $resolver) {
+    public function configureOptions(OptionsResolver $resolver)
+    {
         parent::configureOptions($resolver);
-        $resolver->setDefaults(array(
+        $resolver->setDefaults(
+            array(
             // avoid to pass the csrf token in the url (but it's not protected anymore)
             'csrf_protection' => false,
             'data_class' => 'UserBundle\Model\UserSearch'
-        ));
+            )
+        );
     }
 
-    public function getName() {
+    public function getName()
+    {
         return 'user_search_type';
     }
-
 }
