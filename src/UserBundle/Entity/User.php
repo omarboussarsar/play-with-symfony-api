@@ -20,9 +20,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *      fields={"username", "email"},
  *      errorPath="username",
  *      message="This username or/and email is/are already in use.")
- * 
- * @ExclusionPolicy("all") 
- * 
+ *
+ * @ExclusionPolicy("all")
+ *
  * @Search(repositoryClass="UserBundle\SearchRepository\UserRepository")
  */
 class User extends BaseUser
@@ -33,7 +33,7 @@ class User extends BaseUser
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * 
+     *
      * @Expose
      */
     protected $id;
@@ -42,7 +42,7 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="firstname", type="string", length=150, nullable=true)
-     * 
+     *
      * @Expose
      */
     protected $firstname;
@@ -51,7 +51,7 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=150, nullable=true)
-     * 
+     *
      * @Expose
      */
     protected $name;
@@ -60,17 +60,18 @@ class User extends BaseUser
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
-     * 
+     *
      * @Expose
      */
     protected $createdAt;
     
-    function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->createdAt = new \DateTime();
     }
 
-        /**
+    /**
      * Get id
      *
      * @return int
@@ -131,7 +132,7 @@ class User extends BaseUser
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param  \DateTime $createdAt
      * @return Article
      */
     public function setCreatedAt($createdAt)
@@ -144,7 +145,7 @@ class User extends BaseUser
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -153,18 +154,17 @@ class User extends BaseUser
     
     /**
      * Get the formatted name to display (NAME Firstname or username)
-     * 
-     * @param $separator: the separator between name and firstname (default: ' ')
-     * @return String
-     * @VirtualProperty 
+     *
+     * @param           $separator: the separator between name and firstname (default: ' ')
+     * @return          String
+     * @VirtualProperty
      */
-    public function getUsedName($separator = ' '){
-        if($this->getName()!=null && $this->getFirstName()!=null){
+    public function getUsedName($separator = ' ')
+    {
+        if ($this->getName()!=null && $this->getFirstName()!=null) {
             return ucfirst(strtolower($this->getFirstName())).$separator.strtoupper($this->getName());
-        }
-        else{
+        } else {
             return $this->getUsername();
         }
     }
 }
-

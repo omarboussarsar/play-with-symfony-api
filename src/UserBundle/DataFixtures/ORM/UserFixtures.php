@@ -9,7 +9,8 @@ use Hautelook\AliceBundle\Doctrine\DataFixtures\AbstractLoader;
  *
  * @author omar
  */
-class UserFixtures extends AbstractLoader {
+class UserFixtures extends AbstractLoader
+{
     /**
      * {@inheritdoc}
      */

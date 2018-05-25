@@ -14,34 +14,54 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
  *
  * @author omar
  */
-class UserType extends AbstractType {
+class UserType extends AbstractType
+{
 
     /**
-     * 
+     *
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
         $builder
-                ->add('username', TextType::class, array(
+            ->add(
+                'username',
+                TextType::class,
+                array(
                     'required' => true,
-                ))
-                ->add('email', EmailType::class, array(
+                )
+            )
+            ->add(
+                'email',
+                EmailType::class,
+                array(
                     'required' => true,
-                ))
-                ->add('firstname', TextType::class, array(
+                )
+            )
+            ->add(
+                'firstname',
+                TextType::class,
+                array(
                     'required' => false,
-                ))
-                ->add('name', TextType::class, array(
+                )
+            )
+            ->add(
+                'name',
+                TextType::class,
+                array(
                     'required' => false,
-                ))
-                ->add('plainPassword', RepeatedType::class, array(
+                )
+            )
+            ->add(
+                'plainPassword',
+                RepeatedType::class,
+                array(
                     'type' => PasswordType::class,
                     'first_options' => array('label' => 'Password'),
                     'second_options' => array('label' => 'Confirm password'),
                     'invalid_message' => "passwords don't match",
-                ))
-        ;
+                )
+            );
     }
-
 }

@@ -2,7 +2,7 @@
 
 namespace UserBundle\Tests\Controller;
 
-use UserBundle\Test\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Description of UserControllerTest
