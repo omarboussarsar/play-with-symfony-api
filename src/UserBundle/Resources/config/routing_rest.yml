@@ -1,5 +1,0 @@
-# Users
-users : 
-  type: rest
-  resource:     "UserBundle:UserRest"
-  name_prefix:  api_

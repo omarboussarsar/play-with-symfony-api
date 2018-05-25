@@ -3,10 +3,7 @@
 namespace UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Request;
-use UserBundle\Model\UserSearch;
-use UserBundle\Form\Type\UserSearchType;
 use UserBundle\Entity\User;
 use UserBundle\Form\Type\UserType;
 
@@ -17,81 +14,52 @@ use UserBundle\Form\Type\UserType;
  */
 class UserController extends Controller {
 
-    //Show all the users
-    public function listAction() {
-        $url = $this->generateUrl('api_get_users', array(), UrlGeneratorInterface::ABSOLUTE_URL);
-        $data = $this->container->get('user.web_service_tools')->getData('GET', $url);
-        return $this->render('UserBundle:User:list.html.twig', array(
-                    'users' => $data
-        ));
+    //Get all the users
+    //"api_get_users"            [GET] /api/users
+    public function getUsersAction() {
+        $users = $this->getDoctrine()->getRepository('UserBundle:User')->findAll();
+        if (!is_array($users) || !count($users)) {
+            throw $this->createNotFoundException();
+        }
+        return $users;
     }
 
-    //Show a specific user
-    public function getAction($username) {
-        $user = $this->getDoctrine()->getRepository('UserBundle:User')->findOneByUsername($username);
+    //Get a specific user by id
+    //"api_get_user"             [GET] /users/{id}
+    public function getUserAction($id) {
+        $user = $this->getDoctrine()->getRepository('UserBundle:User')->findOneById($id);
         if (!is_object($user)) {
             throw $this->createNotFoundException();
         }
-        $url = $this->generateUrl('api_get_user', array('id' => $user->getId()), UrlGeneratorInterface::ABSOLUTE_URL);
-        $data = $this->container->get('user.web_service_tools')->getData('GET', $url);
-        return $this->render('UserBundle:User:user.html.twig', array(
-                    'user' => $data
-        ));
+        return $user;
     }
-    
-    //Add a user
-    public function addAction(Request $request) {
+
+    //Add an user
+    //"api_post_users"           [POST] /users
+    public function postUsersAction(Request $request) {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
-
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $parameters = $request->request->all();
-            $url = $this->generateUrl('api_post_users', array(), UrlGeneratorInterface::ABSOLUTE_URL);
-            $data = $this->container->get('user.web_service_tools')->getData('POST', $url, $parameters);
-            if (isset($data->username)) {
-                return $this->redirect($this->generateUrl(
-                    'user_get', array('username' => $data->username)
-                ));
-            }
-        }
-        return $this->render('UserBundle:User:add.html.twig', array(
-            'form' => $form->createView()
-        ));
-    }
-    
-    //Delete a specific user
-    public function deleteAction($username) {
-        $user = $this->getDoctrine()->getRepository('UserBundle:User')->findOneByUsername($username);
-        if(!is_object($user)){
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+        if (!is_object($user)) {
             throw $this->createNotFoundException();
         }
-        $url = $this->generateUrl('api_delete_user', array('id' => $user->getId()), UrlGeneratorInterface::ABSOLUTE_URL);
-        $data = $this->container->get('user.web_service_tools')->getData('DELETE', $url);
-        return $this->redirect($this->generateUrl(
-            'user_list', array(
-                'is_deleted' => $data,
-                'username' => $username
-            )
-        ));
+        return $user;
     }
 
-    //Search users with elastica
-    public function searchAction(Request $request) {
-        $userSearch = new UserSearch();
-
-        $form = $this->createForm(UserSearchType::class, $userSearch);
-
-        $form->handleRequest($request);
-        $userSearch = $form->getData();
-
-        $elasticaManager = $this->container->get('fos_elastica.manager');
-        $users = $elasticaManager->getRepository('UserBundle:User')->search($userSearch);
-
-        return $this->render('UserBundle:User:search.html.twig', array(
-                    'users' => $users,
-                    'form' => $form->createView(),
-        ));
+    //Delete a specific user
+    //"api_delete_user"          [DELETE] /users/{id}
+    public function deleteUserAction($id) {
+        $user = $this->getDoctrine()->getRepository('UserBundle:User')->findOneById($id);
+        if (!is_object($user)) {
+            throw $this->createNotFoundException();
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
+        return true;
     }
 
 }
