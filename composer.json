@@ -1,5 +1,5 @@
 {
-    "name": "play-with-symfony",
+    "name": "play-with-symfony-api",
     "license": "proprietary",
     "type": "project",
     "autoload": {
@@ -69,5 +69,5 @@
         },
         "branch-alias": null
     },
-    "version": "0.1.1"
+    "version": "0.2.0-rc0"
 }
