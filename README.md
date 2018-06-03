@@ -11,7 +11,7 @@ I have implemented those bundles:
 - "friendsofsymfony/rest-bundle": "^2.1"
 - "jms/serializer-bundle": "^2.4"
 - "friendsofsymfony/user-bundle": "~2.0@dev"
-- "friendsofsymfony/elastica-bundle": "^3.2"
+- "friendsofsymfony/elastica-bundle": "5.*"
 - "nelmio/api-doc-bundle": "~2.0"
 
 *DEV*
