@@ -2,11 +2,11 @@ fos_elastica:
     clients:
         default: { host: "%elastic_host%", port: "%elastic_port%" }
     indexes:
-        users:
-            client: default
+        user:
+            index_name: user_%kernel.environment%
             types:
                 user:
-                    mappings:
+                    properties:
                         id:
                             type: integer
                         createdAt :
