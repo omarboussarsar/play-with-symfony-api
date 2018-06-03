@@ -8,7 +8,6 @@ use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\VirtualProperty;
 use FOS\UserBundle\Model\User as BaseUser;
-use FOS\ElasticaBundle\Annotation\Search;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -23,7 +22,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ExclusionPolicy("all")
  *
- * @Search(repositoryClass="UserBundle\SearchRepository\UserRepository")
  */
 class User extends BaseUser
 {

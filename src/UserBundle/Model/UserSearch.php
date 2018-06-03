@@ -16,6 +16,7 @@ class UserSearch
     protected $createdTo;
     // enabled or not
     protected $isEnabled;
+    // username
     protected $username;
 
     public function __construct()
